@@ -1,0 +1,97 @@
+graph TB
+    %% Frontend Layer
+    subgraph "Frontend (React)"
+        UI[React Components]
+        STATE[State Management<br/>Redux/Context]
+        API_CLIENT[API Client<br/>Axios/Fetch]
+    end
+
+    %% Primary Adapters (Driving)
+    subgraph "Primary Adapters (Driving)"
+        HTTP_CTRL[HTTP Controllers<br/>Symfony Controllers]
+        CLI[CLI Commands<br/>Symfony Console]
+        EVENTS[Event Listeners<br/>Symfony Events]
+    end
+
+    %% Application Core (Hexagon)
+    subgraph "Application Core (Hexagon)"
+        subgraph "Application Layer"
+            USE_CASES[Use Cases<br/>Application Services]
+            HANDLERS[Command/Query<br/>Handlers]
+            APP_EVENTS[Application Events]
+        end
+        
+        subgraph "Domain Layer"
+            ENTITIES[Domain Entities]
+            AGGREGATES[Aggregates]
+            DOMAIN_SERVICES[Domain Services]
+            VALUE_OBJECTS[Value Objects]
+            DOMAIN_EVENTS[Domain Events]
+            REPOSITORIES_INTERFACE[Repository<br/>Interfaces]
+        end
+    end
+
+    %% Secondary Adapters (Driven)
+    subgraph "Secondary Adapters (Driven)"
+        DOCTRINE[Doctrine ORM<br/>Repository Implementation]
+        REDIS[Redis Cache<br/>Adapter]
+        MAIL[Email Service<br/>SwiftMailer/Symfony Mailer]
+        FILE_SYSTEM[File System<br/>Flysystem]
+        EXTERNAL_API[External APIs<br/>HTTP Clients]
+        MESSAGE_QUEUE[Message Queue<br/>Messenger Component]
+    end
+
+    %% Database Layer
+    subgraph "Infrastructure"
+        DATABASE[(MySQL/PostgreSQL<br/>Database)]
+        CACHE_STORE[(Redis<br/>Cache Store)]
+        QUEUE_BROKER[(RabbitMQ/Redis<br/>Message Broker)]
+        FILE_STORAGE[(File Storage<br/>Local/S3)]
+    end
+
+    %% Connections - Frontend to Backend
+    UI --> STATE
+    STATE --> API_CLIENT
+    API_CLIENT -->|HTTP/JSON API| HTTP_CTRL
+
+    %% Connections - Primary Adapters to Core
+    HTTP_CTRL --> USE_CASES
+    CLI --> USE_CASES
+    EVENTS --> HANDLERS
+    
+    %% Connections - Within Core
+    USE_CASES --> DOMAIN_SERVICES
+    USE_CASES --> AGGREGATES
+    HANDLERS --> ENTITIES
+    DOMAIN_SERVICES --> ENTITIES
+    AGGREGATES --> ENTITIES
+    AGGREGATES --> VALUE_OBJECTS
+    ENTITIES --> DOMAIN_EVENTS
+    
+    %% Connections - Core to Secondary Adapters
+    USE_CASES --> REPOSITORIES_INTERFACE
+    REPOSITORIES_INTERFACE -.->|implements| DOCTRINE
+    USE_CASES --> REDIS
+    USE_CASES --> MAIL
+    USE_CASES --> FILE_SYSTEM
+    USE_CASES --> EXTERNAL_API
+    APP_EVENTS --> MESSAGE_QUEUE
+
+    %% Connections - Secondary Adapters to Infrastructure
+    DOCTRINE --> DATABASE
+    REDIS --> CACHE_STORE
+    MESSAGE_QUEUE --> QUEUE_BROKER
+    FILE_SYSTEM --> FILE_STORAGE
+
+    %% Styling
+    classDef frontend fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef primary fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef core fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+    classDef secondary fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef infrastructure fill:#fce4ec,stroke:#880e4f,stroke-width:2px
+
+    class UI,STATE,API_CLIENT frontend
+    class HTTP_CTRL,CLI,EVENTS primary
+    class USE_CASES,HANDLERS,APP_EVENTS,ENTITIES,AGGREGATES,DOMAIN_SERVICES,VALUE_OBJECTS,DOMAIN_EVENTS,REPOSITORIES_INTERFACE core
+    class DOCTRINE,REDIS,MAIL,FILE_SYSTEM,EXTERNAL_API,MESSAGE_QUEUE secondary
+    class DATABASE,CACHE_STORE,QUEUE_BROKER,FILE_STORAGE infrastructure

@@ -1,0 +1,263 @@
+project-root/
+├── backend/                                    # Symfony Backend
+│   ├── config/
+│   │   ├── packages/
+│   │   ├── routes/
+│   │   └── services.yaml
+│   ├── migrations/
+│   ├── public/
+│   │   └── index.php
+│   ├── src/
+│   │   ├── Application/                        # Application Layer (Use Cases)
+│   │   │   ├── Command/
+│   │   │   │   ├── User/
+│   │   │   │   │   ├── CreateUserCommand.php
+│   │   │   │   │   ├── UpdateUserCommand.php
+│   │   │   │   │   └── DeleteUserCommand.php
+│   │   │   │   └── Product/
+│   │   │   │       ├── CreateProductCommand.php
+│   │   │   │       └── UpdateProductCommand.php
+│   │   │   ├── Query/
+│   │   │   │   ├── User/
+│   │   │   │   │   ├── GetUserQuery.php
+│   │   │   │   │   └── GetUsersQuery.php
+│   │   │   │   └── Product/
+│   │   │   │       ├── GetProductQuery.php
+│   │   │   │       └── GetProductsQuery.php
+│   │   │   ├── Handler/
+│   │   │   │   ├── Command/
+│   │   │   │   │   ├── User/
+│   │   │   │   │   │   ├── CreateUserHandler.php
+│   │   │   │   │   │   ├── UpdateUserHandler.php
+│   │   │   │   │   │   └── DeleteUserHandler.php
+│   │   │   │   │   └── Product/
+│   │   │   │   │       ├── CreateProductHandler.php
+│   │   │   │   │       └── UpdateProductHandler.php
+│   │   │   │   └── Query/
+│   │   │   │       ├── User/
+│   │   │   │       │   ├── GetUserHandler.php
+│   │   │   │       │   └── GetUsersHandler.php
+│   │   │   │       └── Product/
+│   │   │   │           ├── GetProductHandler.php
+│   │   │   │           └── GetProductsHandler.php
+│   │   │   ├── Event/
+│   │   │   │   ├── User/
+│   │   │   │   │   ├── UserCreated.php
+│   │   │   │   │   └── UserDeleted.php
+│   │   │   │   └── Product/
+│   │   │   │       └── ProductCreated.php
+│   │   │   ├── Service/                        # Application Services
+│   │   │   │   ├── UserService.php
+│   │   │   │   ├── ProductService.php
+│   │   │   │   └── EmailService.php
+│   │   │   └── DTO/                           # Data Transfer Objects
+│   │   │       ├── User/
+│   │   │       │   ├── CreateUserDTO.php
+│   │   │       │   └── UserDTO.php
+│   │   │       └── Product/
+│   │   │           ├── CreateProductDTO.php
+│   │   │           └── ProductDTO.php
+│   │   ├── Domain/                            # Domain Layer (Business Logic)
+│   │   │   ├── Entity/
+│   │   │   │   ├── User/
+│   │   │   │   │   ├── User.php
+│   │   │   │   │   └── UserRepository.php     # Interface
+│   │   │   │   ├── Product/
+│   │   │   │   │   ├── Product.php
+│   │   │   │   │   └── ProductRepository.php  # Interface
+│   │   │   │   └── Common/
+│   │   │   │       ├── AggregateRoot.php
+│   │   │   │       └── Entity.php
+│   │   │   ├── ValueObject/
+│   │   │   │   ├── Email.php
+│   │   │   │   ├── Money.php
+│   │   │   │   ├── UserId.php
+│   │   │   │   └── ProductId.php
+│   │   │   ├── Service/                       # Domain Services
+│   │   │   │   ├── UserDomainService.php
+│   │   │   │   └── ProductDomainService.php
+│   │   │   ├── Event/                         # Domain Events
+│   │   │   │   ├── User/
+│   │   │   │   │   ├── UserRegistered.php
+│   │   │   │   │   └── UserPasswordChanged.php
+│   │   │   │   └── Product/
+│   │   │   │       └── ProductPriceChanged.php
+│   │   │   ├── Exception/
+│   │   │   │   ├── UserNotFoundException.php
+│   │   │   │   └── InvalidEmailException.php
+│   │   │   └── Specification/
+│   │   │       ├── UserSpecification.php
+│   │   │       └── ProductSpecification.php
+│   │   └── Infrastructure/                    # Infrastructure Layer (Adapters)
+│   │       ├── Adapter/                       # Secondary Adapters
+│   │       │   ├── Primary/                   # Primary Adapters (Driving)
+│   │       │   │   ├── Http/
+│   │       │   │   │   ├── Controller/
+│   │       │   │   │   │   ├── Api/
+│   │       │   │   │   │   │   ├── UserController.php
+│   │       │   │   │   │   │   ├── ProductController.php
+│   │       │   │   │   │   │   └── AuthController.php
+│   │       │   │   │   │   └── Web/
+│   │       │   │   │   │       └── DashboardController.php
+│   │       │   │   │   ├── Request/
+│   │       │   │   │   │   ├── CreateUserRequest.php
+│   │       │   │   │   │   └── CreateProductRequest.php
+│   │       │   │   │   └── Response/
+│   │       │   │   │       ├── UserResponse.php
+│   │       │   │   │       └── ProductResponse.php
+│   │       │   │   ├── Console/
+│   │       │   │   │   ├── Command/
+│   │       │   │   │   │   ├── ImportUsersCommand.php
+│   │       │   │   │   │   └── GenerateReportCommand.php
+│   │       │   │   └── EventListener/
+│   │       │   │       ├── UserEventListener.php
+│   │       │   │       └── ProductEventListener.php
+│   │       │   └── Secondary/                 # Secondary Adapters (Driven)
+│   │       │       ├── Persistence/
+│   │       │       │   ├── Doctrine/
+│   │       │       │   │   ├── Repository/
+│   │       │       │   │   │   ├── DoctrineUserRepository.php
+│   │       │       │   │   │   └── DoctrineProductRepository.php
+│   │       │       │   │   ├── Entity/
+│   │       │       │   │   │   ├── UserEntity.php
+│   │       │       │   │   │   └── ProductEntity.php
+│   │       │       │   │   └── Migration/
+│   │       │       │   └── Cache/
+│   │       │       │       ├── RedisUserCache.php
+│   │       │       │       └── RedisCacheAdapter.php
+│   │       │       ├── Messaging/
+│   │       │       │   ├── Email/
+│   │       │       │   │   ├── SymfonyMailerAdapter.php
+│   │       │       │   │   └── EmailTemplate/
+│   │       │       │   └── Queue/
+│   │       │       │       ├── MessengerQueueAdapter.php
+│   │       │       │       └── Handler/
+│   │       │       │           └── EmailHandler.php
+│   │       │       ├── ExternalApi/
+│   │       │       │   ├── PaymentGateway/
+│   │       │       │   │   ├── StripeAdapter.php
+│   │       │       │   │   └── PayPalAdapter.php
+│   │       │       │   └── NotificationService/
+│   │       │       │       └── SlackAdapter.php
+│   │       │       └── FileSystem/
+│   │       │           ├── LocalFileSystemAdapter.php
+│   │       │           └── S3FileSystemAdapter.php
+│   │       └── Config/
+│   │           ├── DependencyInjection/
+│   │           │   └── services.yaml
+│   │           └── Doctrine/
+│   │               ├── User.orm.yaml
+│   │               └── Product.orm.yaml
+│   ├── tests/
+│   │   ├── Unit/
+│   │   │   ├── Domain/
+│   │   │   │   ├── Entity/
+│   │   │   │   ├── ValueObject/
+│   │   │   │   └── Service/
+│   │   │   └── Application/
+│   │   │       ├── Handler/
+│   │   │       └── Service/
+│   │   ├── Integration/
+│   │   │   ├── Repository/
+│   │   │   └── Api/
+│   │   └── Functional/
+│   │       └── Controller/
+│   ├── var/
+│   ├── vendor/
+│   ├── composer.json
+│   ├── composer.lock
+│   ├── symfony.lock
+│   └── .env
+│
+├── frontend/                                  # React Frontend
+│   ├── public/
+│   │   ├── index.html
+│   │   └── favicon.ico
+│   ├── src/
+│   │   ├── components/                        # UI Components
+│   │   │   ├── common/
+│   │   │   │   ├── Button/
+│   │   │   │   │   ├── Button.tsx
+│   │   │   │   │   ├── Button.test.tsx
+│   │   │   │   │   └── Button.module.css
+│   │   │   │   ├── Modal/
+│   │   │   │   └── Layout/
+│   │   │   ├── user/
+│   │   │   │   ├── UserList/
+│   │   │   │   │   ├── UserList.tsx
+│   │   │   │   │   └── UserList.module.css
+│   │   │   │   ├── UserForm/
+│   │   │   │   └── UserCard/
+│   │   │   └── product/
+│   │   │       ├── ProductList/
+│   │   │       ├── ProductForm/
+│   │   │       └── ProductCard/
+│   │   ├── pages/                            # Page Components
+│   │   │   ├── Home/
+│   │   │   │   └── HomePage.tsx
+│   │   │   ├── User/
+│   │   │   │   ├── UsersPage.tsx
+│   │   │   │   └── UserDetailPage.tsx
+│   │   │   └── Product/
+│   │   │       ├── ProductsPage.tsx
+│   │   │       └── ProductDetailPage.tsx
+│   │   ├── hooks/                            # Custom Hooks
+│   │   │   ├── useApi.ts
+│   │   │   ├── useUsers.ts
+│   │   │   └── useProducts.ts
+│   │   ├── services/                         # API Services
+│   │   │   ├── api/
+│   │   │   │   ├── client.ts                 # Axios configuration
+│   │   │   │   ├── userApi.ts
+│   │   │   │   ├── productApi.ts
+│   │   │   │   └── authApi.ts
+│   │   │   └── auth/
+│   │   │       ├── authService.ts
+│   │   │       └── tokenService.ts
+│   │   ├── store/                            # State Management
+│   │   │   ├── index.ts                      # Store configuration
+│   │   │   ├── rootReducer.ts
+│   │   │   ├── slices/
+│   │   │   │   ├── userSlice.ts
+│   │   │   │   ├── productSlice.ts
+│   │   │   │   └── authSlice.ts
+│   │   │   └── middleware/
+│   │   │       └── apiMiddleware.ts
+│   │   ├── types/                            # TypeScript Types
+│   │   │   ├── api.ts
+│   │   │   ├── user.ts
+│   │   │   ├── product.ts
+│   │   │   └── common.ts
+│   │   ├── utils/                            # Utility Functions
+│   │   │   ├── constants.ts
+│   │   │   ├── helpers.ts
+│   │   │   └── validation.ts
+│   │   ├── styles/                           # Global Styles
+│   │   │   ├── globals.css
+│   │   │   ├── variables.css
+│   │   │   └── components.css
+│   │   ├── App.tsx
+│   │   ├── App.test.tsx
+│   │   ├── index.tsx
+│   │   └── setupTests.ts
+│   ├── package.json
+│   ├── package-lock.json
+│   ├── tsconfig.json
+│   └── .env
+│
+├── docker/                                    # Docker Configuration
+│   ├── php/
+│   │   └── Dockerfile
+│   ├── nginx/
+│   │   ├── Dockerfile
+│   │   └── default.conf
+│   ├── mysql/
+│   │   └── init.sql
+│   └── redis/
+│       └── redis.conf
+│
+├── docker-compose.yml
+├── docker-compose.override.yml
+├── .gitignore
+├── README.md
+└── Makefile

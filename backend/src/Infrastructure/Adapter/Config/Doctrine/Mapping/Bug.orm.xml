@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+
+    <entity name="App\Domain\Entity\Bug" repository-class="App\Repository\BugRepository" table="bug">
+
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO"/>
+        </id>
+
+        <field name="title" type="string" length="1000" nullable="false"/>
+
+        <field name="description" type="string" length="1000" nullable="true"/>
+
+        <field name="image" type="string" length="1000" nullable="true"/>
+
+    </entity>
+</doctrine-mapping>
