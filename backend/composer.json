@@ -24,7 +24,10 @@
         "symfony/yaml": "7.3.*"
     },
     "require-dev": {
+        "phpstan/phpstan": "^2.1",
+        "phpstan/phpstan-doctrine": "^2.0",
         "phpunit/phpunit": "^11.5.33",
+        "squizlabs/php_codesniffer": "^3.13",
         "symfony/browser-kit": "7.3.*",
         "symfony/css-selector": "7.3.*",
         "symfony/maker-bundle": "^1.64"
@@ -59,7 +62,9 @@
         "symfony/polyfill-php82": "*"
     },
     "scripts": {
-        "test": "vendor/bin/phpunit",
+        "test": "./vendor/bin/phpunit",
+        "lint": "./vendor/bin/phpcs src/",
+        "stan": "./vendor/bin/phpstan analyse",
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
