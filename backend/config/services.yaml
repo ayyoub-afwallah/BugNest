@@ -18,3 +18,13 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    aws_client:
+        class: Aws\S3\S3Client
+        arguments:
+            -   version: 'latest'
+                region: 'us-east-1'
+                endpoint: 'http://minio:9000'
+                use_path_style_endpoint: true
+                credentials:
+                    key: 'minio'
+                    secret: 'minio123'
