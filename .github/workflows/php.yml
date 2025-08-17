@@ -26,7 +26,7 @@ jobs:
       uses: actions/cache@v3
       with:
         path: backend/vendor
-        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+        key: ${{ runner.os }}-php-${{ hashFiles('backend/composer.lock') }}
         restore-keys: |
           ${{ runner.os }}-php-
 
@@ -37,6 +37,6 @@ jobs:
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
 
-     - name: Run test suite
-       run: composer run-script test
-       working-directory: backend
+    - name: Run test suite
+      run: composer run-script test
+      working-directory: backend
