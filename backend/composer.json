@@ -1,4 +1,6 @@
 {
+    "name": "AFW-ALLAH/BugNest",
+    "description": "Bug Tracker with Report Abilities",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
