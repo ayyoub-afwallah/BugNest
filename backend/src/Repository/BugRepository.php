@@ -3,13 +3,14 @@
 namespace App\Repository;
 
 use App\Domain\Entity\Bug;
+use App\Domain\Port\BugRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<Bug>
  */
-class BugRepository extends ServiceEntityRepository
+class BugRepository extends ServiceEntityRepository implements BugRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -40,4 +41,12 @@ class BugRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function create(Bug $bug): Bug
+    {
+        $this->getEntityManager()->persist($bug);
+        $this->getEntityManager()->flush();
+
+        return $bug;
+    }
 }

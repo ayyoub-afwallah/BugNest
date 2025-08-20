@@ -59,7 +59,7 @@ services:
     volumes:
       - ./frontend:/usr/src/app:delegated
     ports:
-      - "5173:5173"
+      - "3000:3000"
     networks:
       - appnet
 
@@ -73,8 +73,8 @@ services:
     ports:
       - "9000:9000"  # S3 API
       - "9090:9090"  # MinIO Console
-    volumes:
-      - ./backend/minio_data:/data
+    #volumes:
+     # - ./backend/minio_data:/data
 
 volumes:
   db_data:
