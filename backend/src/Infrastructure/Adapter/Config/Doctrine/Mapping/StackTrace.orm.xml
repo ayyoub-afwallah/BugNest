@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                  https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Domain\Entity\StackTrace" table="stack_trace">
+        <id name="id" type="integer" column="id">
+            <generator strategy="IDENTITY"/>
+        </id>
+
+        <!-- Bug relationship -->
+        <many-to-one field="bug" target-entity="App\Domain\Entity\Bug" inversed-by="stackTraces">
+            <join-column name="bug_id" referenced-column-name="id" nullable="false" on-delete="CASCADE"/>
+        </many-to-one>
+
+        <!-- Core fields -->
+        <field name="timestamp" type="datetime" column="timestamp" nullable="false">
+            <options>
+                <option name="comment">When this stack trace event occurred</option>
+            </options>
+        </field>
+
+        <field name="type" type="string" column="type" length="50" nullable="false">
+            <options>
+                <option name="comment">Type of event: navigation, console, ajax, error</option>
+            </options>
+        </field>
+
+        <field name="message" type="text" column="message" nullable="false">
+            <options>
+                <option name="comment">The main message or description of the event</option>
+            </options>
+        </field>
+
+        <field name="sequenceOrder" type="integer" column="sequence_order" nullable="false">
+            <options>
+                <option name="comment">Order of events within the bug report</option>
+            </options>
+        </field>
+
+        <!-- Navigation specific fields -->
+        <field name="url" type="string" column="url" length="2048" nullable="true">
+            <options>
+                <option name="comment">URL for navigation events or AJAX endpoints</option>
+            </options>
+        </field>
+
+        <!-- Console specific fields -->
+        <field name="consoleLevel" type="string" column="console_level" length="20" nullable="true">
+            <options>
+                <option name="comment">Console log level: log, warn, error, info, debug</option>
+            </options>
+        </field>
+
+        <!-- AJAX specific fields -->
+        <field name="httpMethod" type="string" column="http_method" length="10" nullable="true">
+            <options>
+                <option name="comment">HTTP method for AJAX calls: GET, POST, PUT, DELETE, etc.</option>
+            </options>
+        </field>
+
+        <field name="httpStatus" type="integer" column="http_status" nullable="true">
+            <options>
+                <option name="comment">HTTP response status code for AJAX calls</option>
+            </options>
+        </field>
+
+        <field name="requestHeaders" type="json" column="request_headers" nullable="true">
+            <options>
+                <option name="comment">Request headers for AJAX calls</option>
+            </options>
+        </field>
+
+        <field name="requestPayload" type="text" column="request_payload" nullable="true">
+            <options>
+                <option name="comment">Request body/payload for AJAX calls</option>
+            </options>
+        </field>
+
+        <field name="responseBody" type="text" column="response_body" nullable="true">
+            <options>
+                <option name="comment">Response body for AJAX calls</option>
+            </options>
+        </field>
+
+        <field name="responseHeaders" type="json" column="response_headers" nullable="true">
+            <options>
+                <option name="comment">Response headers for AJAX calls</option>
+            </options>
+        </field>
+
+        <!-- Error specific fields -->
+        <field name="errorName" type="string" column="error_name" length="255" nullable="true">
+            <options>
+                <option name="comment">Name/type of JavaScript error</option>
+            </options>
+        </field>
+
+        <field name="errorStack" type="text" column="error_stack" nullable="true">
+            <options>
+                <option name="comment">Full JavaScript error stack trace</option>
+            </options>
+        </field>
+
+        <field name="fileName" type="string" column="file_name" length="500" nullable="true">
+            <options>
+                <option name="comment">File where error occurred</option>
+            </options>
+        </field>
+
+        <field name="lineNumber" type="integer" column="line_number" nullable="true">
+            <options>
+                <option name="comment">Line number where error occurred</option>
+            </options>
+        </field>
+
+        <field name="columnNumber" type="integer" column="column_number" nullable="true">
+            <options>
+                <option name="comment">Column number where error occurred</option>
+            </options>
+        </field>
+
+        <!-- Browser/Environment info -->
+        <field name="userAgent" type="string" column="user_agent" length="1000" nullable="true">
+            <options>
+                <option name="comment">Browser user agent string</option>
+            </options>
+        </field>
+
+        <field name="browserInfo" type="json" column="browser_info" nullable="true">
+            <options>
+                <option name="comment">Additional browser/device information</option>
+            </options>
+        </field>
+
+        <!-- Additional metadata -->
+        <field name="additionalData" type="json" column="additional_data" nullable="true">
+            <options>
+                <option name="comment">Any additional context data</option>
+            </options>
+        </field>
+
+        <!-- Timestamps -->
+        <field name="createdAt" type="datetime" column="created_at" nullable="false">
+            <options>
+                <option name="comment">When this record was created in the database</option>
+            </options>
+        </field>
+
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true">
+            <options>
+                <option name="comment">When this record was last updated</option>
+            </options>
+        </field>
+
+        <!-- Indexes for performance -->
+        <indexes>
+            <index name="idx_bug_sequence" columns="bug_id,sequence_order"/>
+            <index name="idx_timestamp" columns="timestamp"/>
+            <index name="idx_type" columns="type"/>
+            <index name="idx_bug_type" columns="bug_id,type"/>
+        </indexes>
+
+        <!-- Lifecycle callbacks -->
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAt"/>
+            <lifecycle-callback type="preUpdate" method="setUpdatedAt"/>
+        </lifecycle-callbacks>
+    </entity>
+</doctrine-mapping>

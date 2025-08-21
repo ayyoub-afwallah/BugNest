@@ -8,6 +8,10 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     && docker-php-ext-install pdo pdo_pgsql zip
 
+RUN pecl install pcov && docker-php-ext-enable pcov
+
+COPY docker/php.ini /usr/local/etc/php/conf.d/pcov.ini
+
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
