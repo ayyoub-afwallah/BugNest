@@ -4,6 +4,11 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    app.s3.endpoint: 'http://172.20.0.3:9000'
+    app.s3.key: 'minio'
+    app.s3.secret: 'minio123'
+    app.s3.region: 'us-east-1'
+    app.s3.version: 'latest'
 
 services:
     # default configuration for services in *this* file
@@ -16,15 +21,20 @@ services:
     App\:
         resource: '../src/'
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
-    aws_client:
+    app.s3_client:
         class: Aws\S3\S3Client
         arguments:
-            -   version: 'latest'
-                region: 'us-east-1'
-                endpoint: 'http://minio:9000'
+            -   version: '%app.s3.version%'
+                region: '%app.s3.region%'
+                path_style_endpoint: true
+                endpoint: '%app.s3.endpoint%'
                 use_path_style_endpoint: true
                 credentials:
-                    key: 'minio'
-                    secret: 'minio123'
+                    key: '%app.s3.key%'
+                    secret: '%app.s3.secret%'
+
+
+    League\Flysystem\FilesystemOperator $bugFilesystem:
+        alias: oneup_flysystem.minio_fs_filesystem
+
+

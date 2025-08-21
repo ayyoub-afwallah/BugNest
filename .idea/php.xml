@@ -172,6 +172,24 @@
       <path value="$PROJECT_DIR$/backend/vendor/league/mime-type-detection" />
       <path value="$PROJECT_DIR$/backend/vendor/league/flysystem" />
       <path value="$PROJECT_DIR$/backend/vendor/league/flysystem-local" />
+      <path value="$PROJECT_DIR$/backend/vendor/squizlabs/php_codesniffer" />
+      <path value="$PROJECT_DIR$/backend/vendor/phpstan/phpstan" />
+      <path value="$PROJECT_DIR$/backend/vendor/phpstan/phpstan-doctrine" />
+      <path value="$PROJECT_DIR$/backend/vendor/symfony/property-info" />
+      <path value="$PROJECT_DIR$/backend/vendor/symfony/property-access" />
+      <path value="$PROJECT_DIR$/backend/vendor/symfony/form" />
+      <path value="$PROJECT_DIR$/backend/vendor/symfony/polyfill-intl-icu" />
+      <path value="$PROJECT_DIR$/backend/vendor/symfony/type-info" />
+      <path value="$PROJECT_DIR$/backend/vendor/symfony/validator" />
+      <path value="$PROJECT_DIR$/backend/vendor/symfony/translation-contracts" />
+      <path value="$PROJECT_DIR$/backend/vendor/async-aws/core" />
+      <path value="$PROJECT_DIR$/backend/vendor/async-aws/s3" />
+      <path value="$PROJECT_DIR$/backend/vendor/symfony/http-client" />
+      <path value="$PROJECT_DIR$/backend/vendor/symfony/http-client-contracts" />
+      <path value="$PROJECT_DIR$/backend/vendor/league/flysystem-async-aws-s3" />
+      <path value="$PROJECT_DIR$/backend/vendor/oneup/flysystem-bundle" />
+      <path value="$PROJECT_DIR$/backend/vendor/doctrine/doctrine-fixtures-bundle" />
+      <path value="$PROJECT_DIR$/backend/vendor/doctrine/data-fixtures" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.2" />

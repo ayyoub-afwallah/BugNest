@@ -23,7 +23,7 @@ class BugService
         {
             $content = file_get_contents($file->getPathname());
 
-            $this->fileStoragePort->upload($content);
+            $this->fileStoragePort->upload($data['image'], $content);
         }
         $bug->setImage($data['image']);
         $bug->setDescription($data['description']);

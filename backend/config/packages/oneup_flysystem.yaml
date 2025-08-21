@@ -1,0 +1,13 @@
+oneup_flysystem:
+    adapters:
+        minio_adapter:
+            awss3v3:
+                client: app.s3_client
+                bucket: bug-images
+                options:
+                    visibility: public
+                    ACL: public-read
+
+    filesystems:
+        minio_fs:
+            adapter: minio_adapter
