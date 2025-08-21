@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Adapter\Http\Controller\API\FeedBack;
 
-use App\Application\useCase\CreateBugUseCase;
+use App\Application\UseCase\CreateBugUseCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;

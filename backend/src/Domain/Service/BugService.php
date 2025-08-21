@@ -3,12 +3,13 @@
 namespace App\Domain\Service;
 
 use App\Application\DTO\BugResponse;
+use App\Application\Service\FileStoragePort;
 use App\Domain\Entity\Bug;
 use App\Domain\Port\BugRepositoryInterface;
 
 class BugService
 {
-    public function __construct(private BugRepositoryInterface $repository)
+    public function __construct(private BugRepositoryInterface $repository, private FileStoragePort $fileStoragePort)
     {
     }
 
@@ -18,6 +19,12 @@ class BugService
 
         $data['image'] = $file->getClientOriginalName();
 
+        if($file)
+        {
+            $content = file_get_contents($file->getPathname());
+
+            $this->fileStoragePort->upload($content);
+        }
         $bug->setImage($data['image']);
         $bug->setDescription($data['description']);
         $bug->setTitle($data['title']);

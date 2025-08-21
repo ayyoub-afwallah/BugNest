@@ -63,7 +63,7 @@ services:
     networks:
       - appnet
 
-  minio:
+  symfony_minio:
     image: quay.io/minio/minio
     container_name: symfony_minio
     command: server /data --console-address ":9090"
@@ -71,13 +71,16 @@ services:
       MINIO_ROOT_USER: minio
       MINIO_ROOT_PASSWORD: minio123
     ports:
-      - "9000:9000"  # S3 API
-      - "9090:9090"  # MinIO Console
-    #volumes:
-     # - ./backend/minio_data:/data
+      - "9000:9000"
+      - "9090:9090"
+    volumes:
+      - minio_data:/data
+    networks:
+      - appnet
 
 volumes:
   db_data:
+  minio_data:
 
 networks:
   appnet:
