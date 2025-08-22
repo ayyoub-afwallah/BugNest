@@ -8,7 +8,9 @@
 
 The following diagram represents our Docker environment. It is generated directly from the `docker-compose.yml` file to ensure it is always up-to-date with our infrastructure.
 
+```mermaid
 %%MERMAID_DIAGRAM%%
+```
 
 ---
 
@@ -16,7 +18,9 @@ The following diagram represents our Docker environment. It is generated directl
 
 This summary shows the current state of our PHPUnit test coverage. The report is generated automatically after each test run.
 
+```mermaid
 %%COVERAGE_SUMMARY%%
+```
 
 ---
 

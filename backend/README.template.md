@@ -5,15 +5,15 @@
 ---
 
 ## 🏛️ System Architecture
-
+```mermaid
 %%MERMAID_DIAGRAM%%
-
+```
 ---
 
 ## 🧪 Code Quality & Test Coverage
-
+```mermaid
 %%COVERAGE_SUMMARY%%
-
+```
 ---
 
 ## 🚀 Getting Started

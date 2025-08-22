@@ -5,12 +5,12 @@ graph TD
 
     subgraph "Docker Environment (Appnet)"
         subgraph "Services"
-            php["php (app_php)"]
-            nginx["nginx (app_nginx)"]
-            db["db (bug_db)"]
-            pgadmin["pgadmin (pgadmin)"]
-            node["node (app_front_node)"]
-            symfony_minio["symfony_minio (symfony_minio)"]
+            php["php"]
+            nginx["nginx"]
+            postgres["postgres"]
+            pgadmin["pgadmin"]
+            node["node"]
+            minio["minio"]
         end
 
         subgraph "Persistent Data"
@@ -23,9 +23,9 @@ graph TD
     php -- depends on --> db
     User/Browser -- "Port 8080" --> nginx
     nginx -- depends on --> php
-    db -- stores data in --> db_data
+    postgres -- stores data in --> db_data
     User/Browser -- "Port 5050" --> pgadmin
     User/Browser -- "Port 3000" --> node
-    User/Browser -- "Port 9000" --> symfony_minio
-    User/Browser -- "Port 9090" --> symfony_minio
-    symfony_minio -- stores data in --> minio_data
+    User/Browser -- "Port 9000" --> minio
+    User/Browser -- "Port 9090" --> minio
+    minio -- stores data in --> minio_data

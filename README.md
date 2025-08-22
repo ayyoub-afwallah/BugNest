@@ -7,6 +7,7 @@
 ## 🏛️ System Architecture
 
 The following diagram represents our Docker environment. It is generated directly from the `docker-compose.yml` file to ensure it is always up-to-date with our infrastructure.
+
 ```mermaid
 graph TD
     subgraph "User Interaction"
@@ -15,12 +16,12 @@ graph TD
 
     subgraph "Docker Environment (Appnet)"
         subgraph "Services"
-            php["php (app_php)"]
-            nginx["nginx (app_nginx)"]
-            db["db (bug_db)"]
-            pgadmin["pgadmin (pgadmin)"]
-            node["node (app_front_node)"]
-            symfony_minio["symfony_minio (symfony_minio)"]
+            php["php"]
+            nginx["nginx"]
+            postgres["postgres"]
+            pgadmin["pgadmin"]
+            node["node"]
+            minio["minio"]
         end
 
         subgraph "Persistent Data"
@@ -33,20 +34,29 @@ graph TD
     php -- depends on --> db
     User/Browser -- "Port 8080" --> nginx
     nginx -- depends on --> php
-    db -- stores data in --> db_data
+    postgres -- stores data in --> db_data
     User/Browser -- "Port 5050" --> pgadmin
     User/Browser -- "Port 3000" --> node
-    User/Browser -- "Port 9000" --> symfony_minio
-    User/Browser -- "Port 9090" --> symfony_minio
-    symfony_minio -- stores data in --> minio_data
+    User/Browser -- "Port 9000" --> minio
+    User/Browser -- "Port 9090" --> minio
+    minio -- stores data in --> minio_data
 ```
+
 ---
 
 ## 🧪 Code Quality & Test Coverage
 
-![HTML in SVG](coverage-summary-styled.svg)
+This summary shows the current state of our PHPUnit test coverage. The report is generated automatically after each test run.
 
-[View My HTML Page](https://ayyoub-afwallah.github.io/BugNest/)
+```mermaid
+%%{init: {'theme':'dark', 'themeVariables': { 'primaryColor': '#4CAF50', 'primaryTextColor': '#fff', 'primaryBorderColor': '#388E3C', 'lineColor': '#F57C00'}}}%%
+xychart-beta
+    title "Code Coverage by Directory"
+    x-axis ["Application", "Domain", "Infrastructure", "Command", "Repository"]
+    y-axis "Coverage %" 0 --> 100
+    bar [100, 83.33, 4.35, 0, 0]
+```
+
 ---
 
 ## 🚀 Getting Started

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Command;
+namespace App\Infrastructure\Adapter\Console\Command;
 
+use App\Domain\Util\StrHelper;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -66,7 +67,7 @@ class GenerateEnvDiagramCommand extends Command
         $mermaid[] = '        subgraph "Services"';
         foreach ($services as $serviceName => $details) {
             $containerName = $details['container_name'] ?? $serviceName;
-            $mermaid[] = "            {$serviceName}[\"{$serviceName} ({$containerName})\"]";
+            $mermaid[] = "            {$serviceName}[\"{$serviceName}\"]";
         }
         $mermaid[] = '        end';
         $mermaid[] = '';
@@ -87,6 +88,9 @@ class GenerateEnvDiagramCommand extends Command
 
         // Create connections
         foreach ($services as $serviceName => $details) {
+
+            $serviceName = StrHelper::toCamelCase($serviceName);
+
             // Port connections from User
             if (isset($details['ports'])) {
                 foreach ($details['ports'] as $port) {

@@ -12,7 +12,8 @@ OUTPUT_FILE="README.md"
 
 # Temporary files to hold the generated content
 MERMAID_CONTENT_FILE="env_diagram.md"
-COVERAGE_CONTENT_FILE="var/coverage-summary-styled.html"
+COVERAGE_CONTENT_FILE="coverage-diagram.mmd"
+COVERAGE_CONTENT_FILE_CONTENT="coverage-diagram.mmd"
 
 # Scripts that generate the content
 SYMFONY_MERMAID_COMMAND="app:readme-generate" # This command should ONLY output the mermaid block
@@ -39,8 +40,9 @@ if [ ! -s "$MERMAID_CONTENT_FILE" ]; then
 fi
 echo "✅ Mermaid content saved to '$MERMAID_CONTENT_FILE'."
 
+echo "➡️ Step 2 of 3: Generating Test Coverage diagram content..."
 
-
+php bin/console coverage:mermaid var/coverage/clover.xml
 
 # --- Step 3: Assemble the final README.md ---
 

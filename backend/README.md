@@ -7,7 +7,7 @@
 ## 🏛️ System Architecture
 
 The following diagram represents our Docker environment. It is generated directly from the `docker-compose.yml` file to ensure it is always up-to-date with our infrastructure.
-```mermaid
+
 graph TD
     subgraph "User Interaction"
         User/Browser
@@ -39,12 +39,19 @@ graph TD
     User/Browser -- "Port 9000" --> symfony_minio
     User/Browser -- "Port 9090" --> symfony_minio
     symfony_minio -- stores data in --> minio_data
-```
+
 ---
 
 ## 🧪 Code Quality & Test Coverage
 
-![HTML in SVG](./var/coverage-summary-styled.svg)
+This summary shows the current state of our PHPUnit test coverage. The report is generated automatically after each test run.
+
+%%{init: {'theme':'dark', 'themeVariables': { 'primaryColor': '#4CAF50', 'primaryTextColor': '#fff', 'primaryBorderColor': '#388E3C', 'lineColor': '#F57C00'}}}%%
+xychart-beta
+    title "Code Coverage by Directory"
+    x-axis ["Application", "Domain", "Infrastructure", "Command", "Repository"]
+    y-axis "Coverage %" 0 --> 100
+    bar [100, 83.33, 4.35, 0, 0]
 
 ---
 

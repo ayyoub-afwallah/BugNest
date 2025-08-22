@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Command\tmp;
+namespace App\Infrastructure\Adapter\Console\Command\tmp;
 
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
