@@ -12,7 +12,7 @@ services:
       - ./README.template.md:/var/www/html/README.template.md
       - ./README.md:/var/www/html/README.md
     depends_on:
-      - db
+      - postgres
     networks:
       - appnet
 

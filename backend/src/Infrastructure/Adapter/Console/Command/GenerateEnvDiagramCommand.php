@@ -56,7 +56,26 @@ class GenerateEnvDiagramCommand extends Command
         $networks = array_keys($config['networks'] ?? []);
         $networkName = $networks[0] ?? 'appnet'; // Default to first network
 
-        $mermaid = ["graph TD"];
+        $mermaid = [];
+
+        // Add modern dark theme with styling
+        $mermaid[] = "%%{init: {";
+        $mermaid[] = "  'theme': 'dark',";
+        $mermaid[] = "  'themeVariables': {";
+        $mermaid[] = "    'primaryColor': '#4CAF50',";
+        $mermaid[] = "    'primaryTextColor': '#ffffff',";
+        $mermaid[] = "    'primaryBorderColor': '#388E3C',";
+        $mermaid[] = "    'lineColor': '#FFC107',";
+        $mermaid[] = "    'secondaryColor': '#2196F3',";
+        $mermaid[] = "    'tertiaryColor': '#FF5722',";
+        $mermaid[] = "    'background': '#1a1a1a',";
+        $mermaid[] = "    'mainBkg': '#2d2d2d',";
+        $mermaid[] = "    'secondBkg': '#3d3d3d',";
+        $mermaid[] = "    'tertiaryBkg': '#4d4d4d'";
+        $mermaid[] = "  }";
+        $mermaid[] = "}}%%";
+
+        $mermaid[] = "graph TD";
         $mermaid[] = '    subgraph "User Interaction"';
         $mermaid[] = '        User/Browser';
         $mermaid[] = '    end';
@@ -116,6 +135,25 @@ class GenerateEnvDiagramCommand extends Command
                     }
                 }
             }
+        }
+
+        // Add styling classes
+        $mermaid[] = "";
+        $mermaid[] = "    %% Styling";
+        $mermaid[] = "    classDef userStyle fill:#2196F3,stroke:#1976D2,stroke-width:3px,color:#fff";
+        $mermaid[] = "    classDef serviceStyle fill:#4CAF50,stroke:#388E3C,stroke-width:2px,color:#fff";
+        $mermaid[] = "    classDef storageStyle fill:#FF9800,stroke:#F57C00,stroke-width:2px,color:#fff";
+        $mermaid[] = "";
+        $mermaid[] = "    class User/Browser userStyle";
+
+        // Apply service styling
+        foreach ($services as $serviceName => $details) {
+            $mermaid[] = "    class {$serviceName} serviceStyle";
+        }
+
+        // Apply storage styling
+        foreach ($volumes as $volumeName => $details) {
+            $mermaid[] = "    class {$volumeName} storageStyle";
         }
 
         return implode("\n", $mermaid);
