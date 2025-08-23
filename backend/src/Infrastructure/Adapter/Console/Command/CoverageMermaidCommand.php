@@ -100,13 +100,7 @@ class CoverageMermaidCommand extends Command
                 // Write to output file
                 $this->filesystem->dumpFile($outputFile, $mermaidContent);
                 $io->success("Mermaid diagram generated successfully: {$outputFile}");
-
-                // Display summary
-                $this->displaySummary($io, $folderCoverage);
             }
-
-            // Display summary
-            $this->displaySummary($io, $folderCoverage);
 
             // Display summary
             $this->displaySummary($io, $folderCoverage);
@@ -143,10 +137,16 @@ class CoverageMermaidCommand extends Command
             try {
                 $data = include $coverageFile;
 
-                // Handle SebastianBergmann\CodeCoverage\CodeCoverage object
-                if (is_object($data) && method_exists($data, 'getData')) {
-                    $rawData = $data->getData();
-                    return $this->parsePhpUnitData($rawData);
+                // Handle SebastianBergmann\CodeCoverage\CodeCoverage object or mocks
+                if (is_object($data)) {
+                    if (method_exists($data, 'getData')) {
+                        $rawData = $data->getData();
+                        return $this->parsePhpUnitData($rawData);
+                    }
+                    // FIX 1: Handle simple objects with a public 'data' property (for testing)
+                    if (isset($data->data) && is_array($data->data)) {
+                        return $this->parsePhpUnitData($data->data);
+                    }
                 }
 
                 // Handle different PHPUnit coverage array formats
@@ -162,7 +162,8 @@ class CoverageMermaidCommand extends Command
 
         // 4. Try unserialized data (legacy format)
         try {
-            $unserialized = unserialize($content);
+            // FIX 2: Suppress expected notice when unserializing invalid data
+            $unserialized = @unserialize($content);
             if ($unserialized !== false) {
                 if (is_object($unserialized) && method_exists($unserialized, 'getData')) {
                     return $this->parsePhpUnitData($unserialized->getData());
@@ -179,7 +180,8 @@ class CoverageMermaidCommand extends Command
             try {
                 // Sometimes the file has additional metadata, try to extract just the coverage data
                 if (preg_match('/s:\d+:"coverage";(.*?)(?:s:\d+:|$)/', $content, $matches)) {
-                    $coverageData = unserialize($matches[1]);
+                    // FIX 2: Also suppress notice here
+                    $coverageData = @unserialize($matches[1]);
                     if ($coverageData !== false) {
                         return $this->parsePhpUnitData($coverageData);
                     }

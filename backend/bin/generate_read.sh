@@ -28,6 +28,10 @@ COVERAGE_PLACEHOLDER="%%COVERAGE_SUMMARY%%"
 
 echo "--- Starting README Generation ---"
 
+echo "--- Generating Test Coverage to var/coverage.xml ---"
+
+ ./vendor/bin/phpunit --coverage-clover var/coverage.xml
+
 # --- Step 1: Generate the content files ---
 
 echo "➡️ Step 1 of 3: Generating Mermaid diagram content..."
@@ -40,9 +44,9 @@ if [ ! -s "$MERMAID_CONTENT_FILE" ]; then
 fi
 echo "✅ Mermaid content saved to '$MERMAID_CONTENT_FILE'."
 
-echo "➡️ Step 2 of 3: Generating Test Coverage diagram content..."
+echo "➡️ Step 2 of 3: Generating Test Coverage diagram content from var/coverage.xml..."
 
-php bin/console coverage:mermaid var/coverage/clover.xml
+php bin/console coverage:mermaid var/coverage.xml
 
 # --- Step 3: Assemble the final README.md ---
 

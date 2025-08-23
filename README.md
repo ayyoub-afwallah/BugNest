@@ -1,4 +1,4 @@
-~~# My Symfony Project
+# My Symfony Project
 
 > **Note:** This README.md is automatically generated. To make changes, please edit the `README.template.md` file and then run the `./generate-readme.sh` script.
 
@@ -82,9 +82,9 @@ This summary shows the current state of our PHPUnit test coverage. The report is
 %%{init: {'theme':'dark', 'themeVariables': { 'primaryColor': '#4CAF50', 'primaryTextColor': '#fff', 'primaryBorderColor': '#388E3C', 'lineColor': '#F57C00'}}}%%
 xychart-beta
     title "Code Coverage by Directory"
-    x-axis ["Application", "Domain", "Infrastructure", "Command", "Repository"]
+    x-axis ["Application", "Infrastructure", "Domain"]
     y-axis "Coverage %" 0 --> 100
-    bar [100, 83.33, 4.35, 0, 0]
+    bar [100, 90.45, 84]
 ```
 
 ---
@@ -125,4 +125,4 @@ The application should now be available at `http://localhost:8080`.
 -   **Run Tests:**
     ```bash
     docker-compose exec php php bin/phpunit
-    ```~~
+    ```
