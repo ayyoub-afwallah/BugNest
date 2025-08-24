@@ -1,23 +1,18 @@
-# Use official Node.js Alpine image
-FROM node:20-alpine
+# Use an official Node.js runtime as a parent image
+FROM node:18-alpine
 
-# Set working directory
+# Set the working directory in the container
 WORKDIR /usr/src/app
 
-# Install dependencies
-COPY package.json package-lock.json* ./
-# Add build tools for native dependencies (optional but helpful)
-RUN apk add --no-cache python3 make g++ \
-  && npm install --legacy-peer-deps
+# Copy package.json and package-lock.json
+# Using the lock file is crucial for reproducible builds
+COPY package*.json ./
 
-# Copy the rest of the app
+# Copy the rest of the application's code
 COPY . .
 
-# Expose the development port
+# Expose the port the app runs on
 EXPOSE 3000
 
-# Ensure react-scripts is available in PATH
-ENV PATH="./node_modules/.bin:$PATH"
-
-# Start the app
+# Command to run the application
 CMD ["npm", "start"]

@@ -58,7 +58,8 @@ services:
       dockerfile: Dockerfile
     container_name: app_front_node
     volumes:
-      - ./frontend:/usr/src/app:delegated
+      # This maps your code but protects the container's node_modules
+      - ./frontend:/usr/src/app
     ports:
       - "3000:3000"
     networks:
